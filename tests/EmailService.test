@@ -1,0 +1,26 @@
+import { EmailService } from '../src/EmailService';
+
+describe('EmailService', () => {
+    let emailService: EmailService;
+
+    beforeEach(() => {
+        emailService = new EmailService();
+    });
+
+    test('should successfully send an email', async () => {
+        const success = await emailService.sendEmail("test@example.com", "Test Content");
+        expect(success).toBe(true);
+    });
+
+    test('should retry sending email if it fails initially', async () => {
+        jest.spyOn(emailService as any, 'sendWithFallback').mockImplementationOnce(async () => false);
+        const success = await emailService.sendEmail("retry@example.com", "Retry Content");
+        expect(success).toBe(true);
+    });
+
+    test('should handle idempotency', async () => {
+        await emailService.sendEmail("unique@example.com", "Unique Content");
+        const success = await emailService.sendEmail("unique@example.com", "Unique Content");
+        expect(success).toBe(true);
+    });
+});
