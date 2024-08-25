@@ -1,0 +1,14 @@
+{
+  "name": "email-sending-service",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "jest": "^27.5.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}
